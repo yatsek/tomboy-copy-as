@@ -1,0 +1,22 @@
+<Addin id="GetTracText"
+    namespace="Tomboy"
+    name="Get as Trac text"
+    author="Dag Rende"
+    description="Copy selected text as Trac text to clipboard."
+    category="Tools"
+    defaultEnabled="false"
+    version="0.1">
+
+    <Runtime>
+        <Import assembly="GetTracText.dll" />
+    </Runtime>
+
+    <Dependencies>
+        <Addin id="Tomboy" version="0.10" />
+    </Dependencies>
+
+    <Extension path="/Tomboy/NoteAddins">
+        <NoteAddin type="Tomboy.GetTracText.GetTracTextAddin" />
+    </Extension>
+</Addin>
+
