@@ -1,0 +1,38 @@
+TOMBOY-COPY-AS
+
+This is a Tomboy add-in that add a menu command for copying a Note to the clipboard in Trac Wiki format. 
+
+BUILDING AND INSTALLATION
+
+This instruction is for Ubuntu 8.10, but is similar for other operating systems or versions.
+
+Make sure you have installed the package mono-gmcs.
+
+Check out the code from Google Code with
+
+  svn checkout http://tomboy-copy-as.googlecode.com/svn/trunk/ tomboy-copy-as-read-only
+
+Go into the resulting dir
+
+  cd tomboy-copy-as-read-only
+
+build it
+
+  make
+
+Install it into Tomboy
+
+  make install
+
+Restart Tomboy
+
+  killall tomboy
+
+and click the reload button if you have Tomboy in your gnome panel, to get it back in the panel.
+
+Now right click on Tomboy in the panel and select Preferences and click Add-ins. 
+Unfold the Tools row and select Get as Track text and click the Enable button.
+Close the Preferences dialog and open a Tomboy note. The tools menu buton now 
+contains the Get as Track text menu item. Write some text in the note and use 
+this menu. Now the clipboard contains the note text in track format.
+
