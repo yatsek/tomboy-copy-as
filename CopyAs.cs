@@ -9,23 +9,20 @@ using System.Xml;
 using System.Xml.XPath;
 using System.Xml.Xsl;
 
-namespace Tomboy.GetTracText
+namespace Tomboy.CopyAs
 {
-        public class GetTracTextAddin : NoteAddin
+        public class CopyAsAddin : NoteAddin
         {
-		const string stylesheet_name = "GetTracText.xsl";
-		static XslTransform xsl;
-                Gtk.MenuItem item;
+                Gtk.MenuItem mainItem;
+		Hashtable transformByMenuItem = new Hashtable();
+		String[] initialXslFiles = {"CopyAs-Trac.xsl", "CopyAs-PmWiki.xsl"};
 
-		static GetTracTextAddin ()
+		static CopyAsAddin ()
 		{
-			Assembly asm = Assembly.GetExecutingAssembly ();
-			string asm_dir = System.IO.Path.GetDirectoryName (asm.Location);
-			string stylesheet_file = Path.Combine (asm_dir, stylesheet_name);
 
-			xsl = new XslTransform ();
+			
 
-			if (File.Exists (stylesheet_file)) {
+/*			if (File.Exists (stylesheet_file)) {
 				Logger.Log ("GetTracText: Using user-custom {0} file.",
 				            stylesheet_name);
 				xsl.Load (stylesheet_file);
@@ -40,19 +37,65 @@ namespace Tomboy.GetTracText
 					            stylesheet_name);
 				}
 			}
+*/
 		}
 
                 public override void Initialize ()
                 {
-                        item = new Gtk.MenuItem (Catalog.GetString ("Get as Trac text"));
-                        item.Activated += OnMenuItemActivated;
-                        item.Show ();
-                        AddPluginMenuItem (item);
+ 			Assembly asm = Assembly.GetExecutingAssembly ();
+			string asm_dir = System.IO.Path.GetDirectoryName (asm.Location);
+
+			string[] xslFiles = System.IO.Directory.GetFiles(asm_dir, "CopyAs-*.xsl");
+			if (xslFiles.Length == 0) {
+				// copy initial files to add-in dir
+				foreach (string xslFile in initialXslFiles) {
+					Stream resource = asm.GetManifestResourceStream (xslFile);
+					Stream dest = new FileStream(Path.Combine (asm_dir, xslFile), FileMode.OpenOrCreate, FileAccess.Write);
+
+					byte[] buf = new byte[4096];
+					while (true) {
+						int n = resource.Read(buf, 0, buf.Length);
+Logger.Log ("n= {0}.", "" + n);
+						if (n == 0) {
+							break;
+						}
+						dest.Write(buf, 0, n);
+					}
+					dest.Close();
+				}
+				// list copied files
+				xslFiles = System.IO.Directory.GetFiles(asm_dir, "CopyAs-*.xsl");
+			}
+			
+			Menu menu = new Menu();
+			foreach (string xslFile in xslFiles) {
+				if (mainItem == null) {
+					mainItem = new Gtk.MenuItem (Catalog.GetString ("Copy as"));
+					mainItem.Show ();
+ 					AddPluginMenuItem (mainItem);
+					mainItem.Submenu = menu;
+				}
+				string menuName = xslFile.Substring(xslFile.IndexOf("-") + 1);
+				menuName = menuName.Substring(0, menuName.Length - 4);
+                       		MenuItem subItem = new Gtk.MenuItem (Catalog.GetString (menuName));
+				subItem.Show();
+                        	subItem.Activated += OnMenuItemActivated;
+				menu.Append(subItem);
+
+				string stylesheet_file = Path.Combine (asm_dir, xslFile);
+				XslTransform xsl = new XslTransform ();
+				xsl.Load (stylesheet_file);
+				transformByMenuItem.Add(subItem, xsl);
+			}
+
                 }
 
                 public override void Shutdown ()
                 {
-                        item.Activated -= OnMenuItemActivated;
+			Menu menu = (Menu)mainItem.Submenu;
+			foreach (MenuItem item in menu.Children) {
+	                        item.Activated -= OnMenuItemActivated;
+			}
                 }
 
                 public override void OnNoteOpened ()
@@ -61,13 +104,15 @@ namespace Tomboy.GetTracText
 
                 void OnMenuItemActivated (object sender, EventArgs args)
                 {
+			XslTransform xsl = (XslTransform)transformByMenuItem[sender];
 			TextWriter writer = new StringWriter();
-			WriteHTMLForNote (writer, Note, false, false);
+			WriteHTMLForNote (xsl, writer, Note, false, false);
 			Gtk.Clipboard cb = Gtk.Clipboard.Get(Gdk.Atom.Intern("CLIPBOARD", true));
 			cb.Text = writer.ToString();
                 }
 
-		public void WriteHTMLForNote (TextWriter writer,
+		public void WriteHTMLForNote (XslTransform xsl,
+						TextWriter writer,
 		                              Note note,
 		                              bool export_linked,
 		                              bool export_linked_all)

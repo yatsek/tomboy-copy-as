@@ -1,13 +1,13 @@
 TOMBOY_DIR=$(HOME)/.tomboy/addins
 
-GetTracText.dll: GetTracText.cs GetTracText.addin.xml
-	gmcs -debug -out:GetTracText.dll -define:DEBUG -target:library -pkg:tomboy-addins -r:Mono.Posix GetTracText.cs -resource:GetTracText.addin.xml -resource:GetTracText.xsl
+CopyAs.dll: CopyAs.cs CopyAs.addin.xml CopyAs-Trac.xsl CopyAs-PmWiki.xsl
+	gmcs -debug -out:CopyAs.dll -define:DEBUG -target:library -pkg:tomboy-addins -r:Mono.Posix CopyAs.cs -resource:CopyAs.addin.xml -resource:CopyAs-Trac.xsl -resource:CopyAs-PmWiki.xsl
 
-install: GetTracText.dll
-	cp GetTracText.dll $(TOMBOY_DIR)
+install: CopyAs.dll
+	cp CopyAs.dll $(TOMBOY_DIR)
 
 uninstall:
-	rm -vf $(TOMBOY_DIR)/GetTracText.dll
+	rm -vf $(TOMBOY_DIR)/CopyAs.dll $(TOMBOY_DIR)/CopyAs-*.xsl
 
 clean:
-	rm -vf GetTracText.dll GetTracText.dll.mdb
+	rm -vf CopyAs.dll CopyAs.dll.mdb
