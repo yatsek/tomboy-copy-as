@@ -1,6 +1,16 @@
 TOMBOY-COPY-AS
 
-This is a Tomboy add-in that add a menu command for copying a Note to the clipboard in Trac Wiki format. 
+This is a Tomboy add-in that add a menu command for copying a Note to the clipboard in 
+Trac Wiki format. 
+
+When you have installed it, if the addins dir (~/.tomboy/addins) doesn't contain any 
+files of name CopyAs-*.xsl it creates a number of translator files there. The files 
+have names CopyAs-xxx.xsl where xxx is the format - initially Trac and PmWiki.
+You can edit these files, and add new files with other xxx names. You can delete 
+files - but if you delete all of them, the initial files will be copied there again.
+
+To understand what the xsl script processes, look at the note files ~/.tomboy/*.note.
+
 
 BUILDING AND INSTALLATION
 
@@ -30,9 +40,7 @@ Restart Tomboy
 
 and click the reload button if you have Tomboy in your gnome panel, to get it back in the panel.
 
-Now right click on Tomboy in the panel and select Preferences and click Add-ins. 
-Unfold the Tools row and select Get as Track text and click the Enable button.
-Close the Preferences dialog and open a Tomboy note. The tools menu buton now 
-contains the Get as Track text menu item. Write some text in the note and use 
-this menu. Now the clipboard contains the note text in track format.
+Open a Tomboy note. The tools menu button now contains the Get as Track text menu item. 
+Write some text in the note and use this menu. Now the clipboard contains the note text 
+in track format.
 
