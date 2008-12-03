@@ -19,25 +19,6 @@ namespace Tomboy.CopyAs
 
 		static CopyAsAddin ()
 		{
-
-			
-
-/*			if (File.Exists (stylesheet_file)) {
-				Logger.Log ("GetTracText: Using user-custom {0} file.",
-				            stylesheet_name);
-				xsl.Load (stylesheet_file);
-			} else {
-				Stream resource = asm.GetManifestResourceStream (stylesheet_name);
-				if (resource != null) {
-					XmlTextReader reader = new XmlTextReader (resource);
-					xsl.Load (reader, null, null);
-					resource.Close ();
-				} else {
-					Logger.Log ("Unable to find HTML export template '{0}'.",
-					            stylesheet_name);
-				}
-			}
-*/
 		}
 
                 public override void Initialize ()
@@ -55,7 +36,6 @@ namespace Tomboy.CopyAs
 					byte[] buf = new byte[4096];
 					while (true) {
 						int n = resource.Read(buf, 0, buf.Length);
-Logger.Log ("n= {0}.", "" + n);
 						if (n == 0) {
 							break;
 						}
