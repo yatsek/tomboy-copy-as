@@ -15,7 +15,7 @@ namespace Tomboy.CopyAs
         {
                 Gtk.MenuItem mainItem;
 		Hashtable transformByMenuItem = new Hashtable();
-		String[] initialXslFiles = {"CopyAs-Trac.xsl", "CopyAs-PmWiki.xsl"};
+		String[] initialXslFiles = {"CopyAs-Trac.xsl", "CopyAs-PmWiki.xsl", "CopyAs-MediaWiki.xsl", "CopyAs-MoinMoin.xsl"};
 
 		static CopyAsAddin ()
 		{

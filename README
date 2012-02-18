@@ -14,9 +14,11 @@ To understand what the xsl script processes, look at the note files ~/.tomboy/*.
 
 BUILDING AND INSTALLATION
 
-This instruction is for Ubuntu 8.10, but is similar for other operating systems or versions.
+This instruction is for Ubuntu 11.10, but is similar for other operating systems or versions.
 
-Make sure you have installed the package mono-gmcs.
+Make sure you have installed the package mono-gmcs and gtk-sharp2 - you can do it with
+
+  sudo apt-get install mono-gmcs gtk-sharp2
 
 Check out the code from Google Code with
 
