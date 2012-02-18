@@ -9,7 +9,7 @@ Tomboy Copy As is an add-in that let you copy a note to the clipboard in the for
 
 * Download the !CopyAs-x.x.dll from the Downloads tab
 * Copy it into the .config/tomboy/addins directory in your home directory
-* rename it to just CopyAs.dll
+* rename it to just !CopyAs.dll
 * Restart Tomboy
 
 = Usage =
