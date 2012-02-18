@@ -1,0 +1,22 @@
+<Addin id="CopyAs"
+    namespace="Tomboy"
+    name="Copy as Trac text"
+    author="Dag Rende"
+    description="Copy Note as Trac text to clipboard."
+    category="Tools"
+    defaultEnabled="true"
+    version="0.1">
+
+    <Runtime>
+        <Import assembly="CopyAs.dll" />
+    </Runtime>
+
+    <Dependencies>
+        <Addin id="Tomboy" version="0.10" />
+    </Dependencies>
+
+    <Extension path="/Tomboy/NoteAddins">
+        <NoteAddin type="Tomboy.CopyAs.CopyAsAddin" />
+    </Extension>
+</Addin>
+

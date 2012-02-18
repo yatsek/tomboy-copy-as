@@ -1,0 +1,48 @@
+TOMBOY-COPY-AS
+
+This is a Tomboy add-in that add a menu command for copying a Note to the clipboard in 
+Trac Wiki format. 
+
+When you have installed it, if the addins dir (~/.tomboy/addins) doesn't contain any 
+files of name CopyAs-*.xsl it creates a number of translator files there. The files 
+have names CopyAs-xxx.xsl where xxx is the format - initially Trac and PmWiki.
+You can edit these files, and add new files with other xxx names. You can delete 
+files - but if you delete all of them, the initial files will be copied there again.
+
+To understand what the xsl script processes, look at the note files ~/.tomboy/*.note.
+
+
+BUILDING AND INSTALLATION
+
+This instruction is for Ubuntu 11.10, but is similar for other operating systems or versions.
+
+Make sure you have installed the package mono-gmcs and gtk-sharp2 - you can do it with
+
+  sudo apt-get install mono-gmcs gtk-sharp2
+
+Check out the code from Google Code with
+
+  svn checkout http://tomboy-copy-as.googlecode.com/svn/trunk/ tomboy-copy-as-read-only
+
+Go into the resulting dir
+
+  cd tomboy-copy-as-read-only
+
+build it
+
+  make
+
+Install it into Tomboy
+
+  make install
+
+Restart Tomboy
+
+  killall tomboy
+
+and click the reload button if you have Tomboy in your gnome panel, to get it back in the panel.
+
+Open a Tomboy note. The tools menu button now contains the Get as Track text menu item. 
+Write some text in the note and use this menu. Now the clipboard contains the note text 
+in track format.
+
